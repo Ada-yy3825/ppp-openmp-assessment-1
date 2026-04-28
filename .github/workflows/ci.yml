@@ -130,15 +130,15 @@ jobs:
               OMP_NUM_THREADS="$i" build/integrate 2>&1 | tee -a "$log"
 
               if grep -qE '^(WARNING|ERROR): ThreadSanitizer' "$log"; then
-                echo "❌ ThreadSanitizer detected issues in $log" | tee -a correctness.log
+                echo "❌ ThreadSanitizer detected issues in $log" | tee -a correctness-a1.log
                 exit 1
               fi
 
               if python3 bin/smart_diff.py "$log" expected_output.txt; then
-                  echo "Integrate-$i: pass" | tee -a correctness.log
+                  echo "Integrate-$i: pass" | tee -a correctness-a1.log
               else
-                  echo "Integrate-$i: fail" | tee -a correctness.log
-                  diff "$log" expected_output.txt | tee -a correctness.log
+                  echo "Integrate-$i: fail" | tee -a correctness-a1.log
+                  diff "$log" expected_output.txt | tee -a correctness-a1.log
                   exit 1
               fi
           done
