@@ -40,6 +40,7 @@ jobs:
       - name: clang-tidy
         run: |
           set -o pipefail
+          # WarningsAsErrors policy lives in .clang-tidy at repo root.
           clang-tidy-20 -p build $(git ls-files '*.cpp' '*.c') \
             -- -I/usr/lib/llvm-20/include 2>&1 | tee clang-tidy.txt
 
