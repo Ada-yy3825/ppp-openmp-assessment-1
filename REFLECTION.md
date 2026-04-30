@@ -29,7 +29,7 @@ Pick your best thread count. Using the Rome roofline constants from the day-2 sl
 Using a conservative operation-equivalent estimate, I counted about 6 operations for a light iteration, including loop arithmetic and the basic arithmetic in `f(x)`. In the heavy region `0.3 < x < 0.4`, each iteration performs ten extra `sqrt(abs(y) + 1.0)` steps, giving about 36 operations for a heavy iteration. Since the heavy region covers about 10% of the domain, the total work is roughly `90,000,000 × 6 + 10,000,000 × 36 = 0.9 GFLOPs`. With my best 128-thread time of 0.0446 s, this gives about 20.2 GFLOPs/s, or around 0.44% of the theoretical peak and 0.70% of the HPL-achievable peak.
 
 ## Section 4 — What you'd try next
-
+ 
 You have two more days. What would you change about `integrate.cpp`? Pick one concrete change and predict its effect. Minimum 50 words.
 
 If I had more time, I would experiment with different chunk sizes for guided and dynamic scheduling to further reduce scheduling overhead at high thread counts. Although `schedule(guided)` performed best overall, there may still be opportunities to improve cache locality and thread utilization by tuning how iterations are distributed. I would also profile the runtime more carefully on the Rome node to identify whether synchronization overhead or memory-system effects become the dominant bottleneck at 128 threads. This could potentially improve scaling efficiency further.
